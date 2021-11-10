@@ -2,8 +2,9 @@ package W2;
 
 /*
 A sorted array (A) of length N is populated with N consecutive different integers ranging from 0 to N has one number missing.
- For example, if N=7 and the array = [0, 1, 2, 3, 4, 6, 7] then the missing value is 5.
-Find an algorithm that finds and prints out the missing integer. What is the big O of your code? Can you find an O(log N) algorithm? No i cant fuck you
+For example, if N=7 and the array = [0, 1, 2, 3, 4, 6, 7] then the missing value is 5.
+Find an algorithm that finds and prints out the missing integer. What is the big O of your code? Can you find an O(log N) algorithm?
+No i cant fuck you
  */
 //O(n)
 public class Problem2 {
