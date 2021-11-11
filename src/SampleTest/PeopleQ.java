@@ -1,6 +1,6 @@
 package SampleTest;
 
-public class PeopleQueue {
+public class PeopleQ {
     //Queue variable
     int front, rear,size, capacity;
     People arr[];
@@ -14,7 +14,7 @@ public class PeopleQueue {
         }
     }
     //Queue implementation
-    public PeopleQueue(int capacity) {
+    public PeopleQ(int capacity) {
         this.capacity = capacity;
         front = this.size = 0;
         rear = capacity -1;
@@ -104,7 +104,7 @@ public class PeopleQueue {
     }
     //Driver code
     public static void main(String[] args) {
-        PeopleQueue queue = new PeopleQueue(4);
+        PeopleQ queue = new PeopleQ(4);
         queue.joinQueue(new People("s1",15));
         queue.joinQueue(new People("s2",19));
         queue.joinQueue(new People("s3",70));
