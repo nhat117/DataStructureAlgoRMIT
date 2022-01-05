@@ -67,7 +67,7 @@ public class W10Prequisite {
             }
         }
 
-        //Return course list
+        //Return course list in dependent order
         public ArrayList<Course> getCourses() {
             int n = courses.size();
             ArrayList<Course> res = new ArrayList<>();
