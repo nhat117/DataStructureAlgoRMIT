@@ -11,7 +11,7 @@ public class RMITLetterUltilty {
                 }
             }
         }
-//        ls.add(res);
+        ls = res;
         return res;
     }
 
@@ -19,7 +19,8 @@ public class RMITLetterUltilty {
         if(l1.row > l2.row) return false;
         if(l1.col > l2.col) return false;
         if((l2.row - l1.row) + (l2.col - l1.col) > 4) return false;
-        if(l1.letter == 'T') return false;
+        //Have to check the first letter if are RMI
+        if(l1.letter != 'R' && l1.letter != 'M' && l1.letter != 'I') return false;
         if(l1.letter == 'R' && l2.letter != 'M') return false;
         if(l1.letter == 'M' && l2.letter != 'I') return false;
         if(l1.letter == 'I' && l2.letter != 'T') return false;
@@ -42,12 +43,12 @@ public class RMITLetterUltilty {
                     for(int i4 = 0; i4 < ls.size(); i4 ++) {
                         if(ls.get(i4).letter != 'T') continue;
                         RMITLetter fourth = ls.get(i4);
-                        if(!canConnect(thrd,fourth)) return false;
+                        if(!canConnect(thrd,fourth)) return true;
                     }
                 }
             }
         }
-        return true;
+        return false;
     }
 
     class RMITLetter {
