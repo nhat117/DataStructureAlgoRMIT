@@ -2,6 +2,7 @@ package SampleTest2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringJoiner;
 
 public class CourseList {
     public static void main(String[] args) {
@@ -17,8 +18,8 @@ public class CourseList {
         list.addPrerequisite(c2, c1);  // make Programming 1 a prerequisite of Web Programming
         list.addPrerequisite(c3, c1);  // make Programming 1 a prerequisite of Data Structures
         list.addPrerequisite(c4, c2);  // make Web Programming a prerequisite of Database Application
-//        list.takeFirst(c1);  // true
-//        list.takeFirst(c3);  // false
+        list.takeFirst(c1);  // true
+        list.takeFirst(c3);  // false
         list.test(list.courseList);
         System.out.println(list.course.size());
         list.coursesTaken(); // return "Programming 1, Web Programming, Data Structures, Database Application"
@@ -61,17 +62,6 @@ public class CourseList {
     }
 
     public void addCourse(Course course) {
-        if(courseList.isEmpty()) {
-            courseList.add(course);
-            this.course.put(course, course.preq.size());
-            return;
-        }
-        //Check duplication
-        for(int i = 0; i < courseList.size(); i++) {
-            if(courseList.get(i).code.equals(course.code)) {
-                return;
-            }
-        }
         courseList.add(course);
         this.course.put(course, course.preq.size());
     }
@@ -93,46 +83,48 @@ public class CourseList {
         }
     }
 
-    public ArrayList<Course> getCourses() {
+    public String coursesTaken() {
         int n = course.size();
         ArrayList<Course> res = new ArrayList<Course>();
-
+        boolean []  added = new boolean[n];
         // Do n-times extraction
         for (int i = 0; i < n; i ++) {
             // found an appropriate course?
+            if(added[i]) {continue;}
+            Course c = courseList.get(i);
             boolean found = false;
-            for (Course c : course.keySet()) {
+            for (int j = 0; j < n; j++) {
                 // Get the course that has no dependence
-                if (course.get(c) == 0) {
-                    res.add(c);
-                    // Update other dependent courses
-                    for (Course depended : course.keySet()) {
-                        if (depended.preq.contains(c)) {
-                            int currentCount = course.get(depended);
-                            course.put(depended, currentCount - 1);
-                        }
-                    }
-                    // Remove this cours
-                    course.remove(c);
+                if (added[j]) continue;
+                if (i == j) continue;
+                Course pre = courseList.get(j);
+                if (c.preq.contains(pre)) {
                     found = true;
                     break;
                 }
+
             }
-            if (!found) {
-                System.out.println("Courses are mutually dependent!");
-                return null;
+            if(found) {
+                continue;
+            }
+            res.add(c);
+            added[i] = true;
+            for(int j = 0; j < n; j++) {
+                Course t = courseList.get(j);
+                if(t.preq.contains(c)) t.preq.remove(c);
             }
         }
-        return res;
+
+        StringJoiner sb = new StringJoiner(", ");
+        for(Course c : res) {
+            sb.add(c.name);
+        }
+        System.out.println(sb);
+        return sb.toString();
     }
 
-    public String coursesTaken() {
-        StringBuilder sb = new StringBuilder();
-        ArrayList<Course> res = getCourses();
-        for(int i = 0; i < res.size(); i ++) {
-            sb.append(res.get(i).name + " ");
-        }
-        return sb.toString();
+    public boolean takeFirst(Course c) {
+        return (c.preq.size() == 0);
     }
 
     public void test(ArrayList <Course> input) {

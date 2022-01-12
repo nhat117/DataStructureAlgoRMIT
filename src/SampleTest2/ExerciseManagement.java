@@ -1,7 +1,5 @@
 package SampleTest2;
 
-import W11.W11_KnapSackDP;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +7,9 @@ import java.util.StringJoiner;
 
 public class ExerciseManagement {
     public static void main(String[] args) {
-        FitnessExercise e1 = new FitnessExercise("Swimming", 30, 100);  // duration is given before fitness
-        FitnessExercise e2 = new FitnessExercise("Football", 45, 120);
-        FitnessExercise e3 = new FitnessExercise("Table tennis", 60, 150);
+        FitnessExercise e1 = new FitnessExercise("Swimming", 100, 30);  // duration is given before fitness
+        FitnessExercise e2 = new FitnessExercise("Football", 120, 45);
+        FitnessExercise e3 = new FitnessExercise("Table tennis", 150, 60);
         ExerciseManagement mgmt = new ExerciseManagement();
         mgmt.add(e1);
         mgmt.add(e2);
@@ -24,7 +22,7 @@ public class ExerciseManagement {
         test.set(1,e3);
         mgmt.exercises(test);  // return "Swimming, Table Tennis"
         mgmt.optimalExercises(120);  // You can do either Swimming or Football in 120 minutes, but doing Football gives you more fitness, so you should return a list containing Football
-//        mgmt.optimalExercises(250);  // Doing Swimming and Table Tennis brings you 90, which is the highest in 250 minutes, so you should return a list containing Swimming and Table Tennis
+        mgmt.optimalExercises(250);  // Doing Swimming and Table Tennis brings you 90, which is the highest in 250 minutes, so you should return a list containing Swimming and Table Tennis
     }
 
     ArrayList<FitnessExercise> exercises;
@@ -78,21 +76,22 @@ public class ExerciseManagement {
     List<FitnessExercise> optimalExercises(int N) {
         // dynamic programming solution to knapsack problem
         int n = this.exercises.size();
-        int[][] V = new int[n + 1][N + 1];
+        int capacity = N;
+        int[][] V = new int[n + 1][capacity + 1];
 
         // denote whether an item i of knapsack N j is selected or not
         // taken[i][j] == true if item i is selected, false otherwise
-        boolean[][] taken = new boolean[n + 1][N + 1];
+        boolean[][] taken = new boolean[n + 1][capacity + 1];
 
         // initialization
         for (int i = 0; i <= n; i++) {
-            for (int j = 0; j <= N; j++) {
+            for (int j = 0; j <= capacity; j++) {
                 V[i][j] = 0;
             }
         }
 
         for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= N; j++) {
+            for (int j = 1; j <= capacity; j++) {
                 if (exercises.get(i - 1).duration > j) {
                     // this item is too heavy to put in the knapsack of N j
                     // so, the maximum value should NOT include this item
@@ -112,7 +111,7 @@ public class ExerciseManagement {
 
         // rebuild the solution
         ArrayList<FitnessExercise> res = new ArrayList<>();
-        int cap = N;
+        int cap = capacity;
         int last = n;
         while (cap > 0 && last > 0) {
             if (taken[last][cap]) {
@@ -120,10 +119,8 @@ public class ExerciseManagement {
                 res.add(exercises.get(last-1));
                 cap -= exercises.get(last - 1).duration;
             }
-            System.out.println(exercises.get(last - 1).name);
             last--;
         }
-
         test(res);
         return res;
     }

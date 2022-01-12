@@ -1,4 +1,5 @@
 package SampleTest2;
+//An implementation of binary tree
 
 public class VariantCollection {
     static final int SIZE =  100;
@@ -11,7 +12,7 @@ public class VariantCollection {
         col.addVariant(new CovidVariant("Beta", "210311A"));
         col.addVariant(new CovidVariant("Omicron", "211120D"));
         col.search("210311A"); // return the Beta variant
-        col.previous("211120D"); // return the Delta variant
+        System.out.println(col.previous("211120D")); // return the Delta variant
 //        System.out.println(variant1IsLarger(new CovidVariant("Beta","210311A"),new CovidVariant("Alpha","210201A")));
     }
 
@@ -68,10 +69,6 @@ public class VariantCollection {
         // Find the appropriate location
         Node temp = root;
         while (true) {
-            // duplication detected, abort
-            if (temp.value.code.equals(v.code)) {
-                return;
-            }
             if (variant1IsLarger(temp.value, v)) {
                 if (temp.left == null) {
                     temp.left = n;
@@ -118,30 +115,54 @@ public class VariantCollection {
                 tail++;
             }
         }
-        //If not found
+        //If no
         System.out.println("Not found");
         return null;
     }
 
     private CovidVariant previous(String code) {
-        if (this.root == null) return null;
-        Node prev = null;
-        while (root != null) {
-            if (variant1IsLarger(root.value, new CovidVariant("", code)) ) {
-                prev = root;
-                root = root.left;
-            } else if (!variant1IsLarger(root.value, new CovidVariant("", code))) {
-                prev = root;
-                root = root.right;
-            } else {
+        Node tmp = this.root;
+        CovidVariant v = new CovidVariant("",code);
+        boolean found;
+        //Use an array to travel backward
+        //Ensure the size ofyour array is sufficient
+        Node[] visit = new Node[100];
+        int start = 0;
+        while (true) {
+            visit[start] = tmp;
+            start ++;
+            if(tmp.value.code.equals(code)) {
+                found = true;
                 break;
             }
+            if (variant1IsLarger(tmp.value, v) ) {
+                if(tmp.left == null) return null;
+                tmp = tmp.left;
+            } else {
+                if(tmp.right == null) return null;
+                tmp = tmp.right;
+            }
         }
-        if(root != null) {
-            System.out.println(prev.value);
-            return prev.value;
+
+        if(found) {
+            //Find the previous of temp
+            //First case: there is a left child of tmp
+           if(tmp.left != null) {
+               tmp = tmp.left;
+               while(tmp.right != null){ tmp = tmp.right;}
+               return tmp.value;
+           } else {
+               start--;
+
+               while (start - 1 >= 0) {
+                   //vist[start] current node
+                   //visit[start -1 ] parent node
+                   if (visit[start - 1].right == visit[start]) return visit[start - 1].value;
+                   start--;
+               }
+               return null;
+           }
         }
         return null;
     }
-
 }
