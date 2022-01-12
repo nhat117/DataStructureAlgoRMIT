@@ -1,6 +1,21 @@
 package SampleTest2; import java.util.ArrayList;
 public class RMITLetterUltilty {
+    public static void main(String[] args) {
+        char[][] l = {
+                {'R','M','A','A','A','A','I','T'}
+        };
+        RMITLetterUltilty ult = new RMITLetterUltilty();
+        ArrayList<RMITLetter> storage = ult.scan(l);
+        System.out.println(ult.canConnect(storage.get(0), storage.get(1))); //True
+        System.out.println(ult.canConnect(storage.get(0), storage.get(2))); //False
+        System.out.println(ult.canFindRMIT());
+     }
     ArrayList<RMITLetter> ls;
+
+    public RMITLetterUltilty() {
+        this.ls = new ArrayList<>();
+    }
+
     public ArrayList<RMITLetter> scan(char[][] letters) {
         ArrayList<RMITLetter> res = new ArrayList<>();
         for(int r = 0; r < letters.length; r++) {

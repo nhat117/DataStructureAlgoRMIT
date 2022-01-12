@@ -3,7 +3,25 @@ package W4;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+/*
+Write a program that prints out the steps to get exactly N liters of water from 2 jugs of X and Y liters.
 
+For example, if X = 3, Y = 5, N = 4:
+
+0 0
+
+0 5
+
+3 2
+
+0 2
+
+2 0
+
+2 5
+
+3 4
+ */
 //Bread first Search
 public class BFS<T> {
     public static void main(String[] args) {

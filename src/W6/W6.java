@@ -1,7 +1,6 @@
 package W6;
 
-import javax.management.StandardEmitterMBean;
-import java.util.SortedMap;
+
 
 public class W6 {
     public static void main(String[] args) {
@@ -19,7 +18,7 @@ public class W6 {
         //Problem 3
         System.out.println("Tree Height" + tree.treeHeight());
 
-        //Problem4
+        //Problem4 Determine the height if
         W6Tree tree2 = new W6Tree();
         for(int i = 0; i < 10; i ++) {
             tree2.randomInsert((int)Math.random() * 100);
@@ -60,6 +59,9 @@ public class W6 {
 
 
         //Problem 1
+        /*
+            Implement a BST of integers with the insert operation. Display the number of steps it takes to find the correct position for the newly inserted value. Generate several random integers and insert them into the BST.
+         */
         public void insertBST(Integer v) {
             W6Node tmp = new W6Node(v);
             int step = 1;
@@ -136,6 +138,8 @@ public class W6 {
             postOrder(n.r);
             System.out.println((int)n.value);
         }
+        //Implementation of breadFirst
+
          public void breadthFirst() {
              System.out.println("Breadth first");
              //Queue
@@ -161,6 +165,7 @@ public class W6 {
           }
 
         // Problem 3
+        //Return the height of a tree
         public int treeHeight() {
             return  nodeHeight(root);
         }

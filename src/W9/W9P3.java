@@ -2,7 +2,11 @@ package W9;
 
 import java.util.Random;
 import java.util.Scanner;
+/*
+Implement a program that guesses a secret number. First, the player needs to think of a number from 1 to 1,000,000. Then, the program will guess that number and ask the player if the guessed value is correct. The player will answer whether the value is correct, too small, or too big. If the value is not correct (i.e., it is too small or too big), the program needs to guess another number until it knows the correct value.
 
+
+ */
 public class W9P3 {
     public static void main(String[] args) {
         int range = 1000;
